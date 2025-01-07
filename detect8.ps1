@@ -9,6 +9,12 @@ function Write-RebrandingMsg() {
     Write-Host "*** From 14th February 2025 this script will fail and not execute any scans."
     Write-Host "*** For more information please see the domain name change annoucement here: https://community.blackduck.com/s/question/0D5Uh00000JsImfKAF/black-duck-detect-scripts-and-the-impact-of-decommissioning-of-detectsynopsyscom"
     Write-Host "***"
+    Write-Host "*** If you are seeing this warning, and using Synopsys Detect Azure extension, migrate to Black Duck Detect Azure extension before Feb 14th."
+    Write-Host "*** For more information please see the extension release announcement here: https://community.blackduck.com/s/question/0D5Uh00000Mz1AcKAJ/black-duck-detect-azure-devops-ado-plugin-1000-has-been-released"
+    Write-Host "***"
+    Write-Host "*** If you are seeing this warning, and using Synopsys Detect Jenkins plugin (9.0.0 or prior), upgrade/migrate to Black Duck Detect Jenkins Plugin 10.0.0 before Feb 14th."
+    Write-Host "*** For more information please see the plugin release announcement here: https://community.blackduck.com/s/question/0D5Uh00000Mtso3KAB/black-duck-detect-jenkins-plugin-1000-has-been-released"
+    Write-Host "***"
     Write-Host "***"
 }
 

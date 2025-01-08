@@ -5,7 +5,7 @@ write_rebranding_msg() {
 	echo "***"
 	echo "*** Warning: Synopsys Detect has been rebranded as Black Duck Detect."
 	echo "*** Please modify your processes to download Black Duck Detect from https://detect.blackduck.com/detect9.sh before February 14th, 2025, to prevent script and scan execution failure."
-	echo "*** For more information, please see the domain name change annoucement here: https://community.blackduck.com/s/question/0D5Uh00000JsImfKAF/black-duck-detect-scripts-and-the-impact-of-decommissioning-of-detectsynopsyscom"
+	echo "*** For more information, please see the domain name change announcement here: https://community.blackduck.com/s/question/0D5Uh00000JsImfKAF/black-duck-detect-scripts-and-the-impact-of-decommissioning-of-detectsynopsyscom"
 	echo "***"
 	echo "*** If you are using the Synopsys Detect Azure extension, migrate to the Black Duck Detect Azure extension before February 14th, 2025."
 	echo "*** For more information, please see the extension release announcement here: https://community.blackduck.com/s/question/0D5Uh00000Mz1AcKAJ/black-duck-detect-azure-devops-ado-plugin-1000-has-been-released"

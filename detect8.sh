@@ -245,6 +245,7 @@ run_detect() {
 
   eval "${JAVACMD} ${SCRIPT_ARGS}"
   RESULT=$?
+  write_rebranding_msg
   echo "Result code of ${RESULT}, exiting"
   exit ${RESULT}
 }

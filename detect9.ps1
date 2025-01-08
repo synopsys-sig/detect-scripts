@@ -144,6 +144,8 @@ function Detect {
         $DetectArgs = $args;
         $DetectExitCode = Invoke-Detect -DetectJar $DetectJarFile -DetectArgs $DetectArgs
 
+        Write-RebrandingMsg
+
         if ($EnvDetectExitCodePassthru -eq "1") {
             return $DetectExitCode
         } else {

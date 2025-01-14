@@ -1,6 +1,23 @@
 #!/bin/bash
 
-echo "Detect Shell Script ${SCRIPT_VERSION}"
+write_rebranding_msg() {
+	echo "***"
+	echo "***"
+	echo "*** Warning: Synopsys Detect has been rebranded as Black Duck Detect."
+	echo "*** Please modify your processes to download Black Duck Detect from https://detect.blackduck.com/detect8.sh before February 14th, 2025, to prevent script and scan execution failure."
+	echo "*** For more information, please see the domain name change announcement here: https://community.blackduck.com/s/question/0D5Uh00000JsImfKAF/black-duck-detect-scripts-and-the-impact-of-decommissioning-of-detectsynopsyscom"
+	echo "***"
+	echo "*** If you are using the Synopsys Detect Azure extension, migrate to the Black Duck Detect Azure extension before February 14th, 2025."
+	echo "*** For more information, please see the extension release announcement here: https://community.blackduck.com/s/question/0D5Uh00000Mz1AcKAJ/black-duck-detect-azure-devops-ado-plugin-1000-has-been-released"
+	echo "***"
+	echo "*** If you are using Synopsys Detect Jenkins plugin (9.0.0 or prior), migrate to Black Duck Detect Jenkins Plugin 10.0.0 before February 14th, 2025."
+	echo "*** For more information, please see the plugin release announcement here: https://community.blackduck.com/s/question/0D5Uh00000Mtso3KAB/black-duck-detect-jenkins-plugin-1000-has-been-released"
+	echo "***"
+	echo "***"
+
+}
+
+write_rebranding_msg
 
 get_path_separator() {
   # Performs a check to see if the system is Windows based.
@@ -228,6 +245,7 @@ run_detect() {
 
   eval "${JAVACMD} ${SCRIPT_ARGS}"
   RESULT=$?
+  write_rebranding_msg
   echo "Result code of ${RESULT}, exiting"
   exit ${RESULT}
 }

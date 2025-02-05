@@ -18,6 +18,7 @@ function Write-RebrandingMsg() {
 }
 
 Write-RebrandingMsg
+exit 99
 
 $ProgressPreference = 'SilentlyContinue'
 function Get-EnvironmentVariable($Key, $DefaultValue) { if (-not (Test-Path Env:$Key)) { return $DefaultValue; }else { return (Get-ChildItem Env:$Key).Value; } }

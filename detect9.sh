@@ -149,7 +149,7 @@ get_detect() {
   LOCAL_FILE="${DETECT_JAR_DOWNLOAD_DIR}${PATH_SEPARATOR}synopsys-detect-last-downloaded-jar.txt"
   if [[ -z "${DETECT_SOURCE}" ]]; then
     if [[ -z "${DETECT_RELEASE_VERSION}" ]]; then
-      VERSION_CURL_CMD="curl ${DETECT_CURL_OPTS} --silent --header \"X-Result-Detail: info\" '${DETECT_BINARY_REPO_URL}/api/storage/bds-integrations-release/com/$(get_org_name)/integration/$(get_detect_name_prefix)?properties=${DETECT_VERSION_KEY}'"
+      VERSION_CURL_CMD="curl ${DETECT_CURL_OPTS} -L --silent --header \"X-Result-Detail: info\" '${DETECT_BINARY_REPO_URL}/api/storage/bds-integrations-release/com/$(get_org_name)/integration/$(get_detect_name_prefix)?properties=${DETECT_VERSION_KEY}'"
       VERSION_EXTRACT_CMD="${VERSION_CURL_CMD} | grep \"${DETECT_VERSION_KEY}\" | sed 's/[^[]*[^\"]*\"\([^\"]*\).*/\1/'"
       DETECT_SOURCE=$(eval ${VERSION_EXTRACT_CMD})
       if [[ -z "${DETECT_SOURCE}" ]]; then

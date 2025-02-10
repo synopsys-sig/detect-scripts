@@ -4,20 +4,21 @@
 function Write-RebrandingMsg() {
     Write-Host "***"
     Write-Host "***"
-    Write-Host "*** Warning: Synopsys Detect has been rebranded as Black Duck Detect."
-    Write-Host "*** Please modify your processes to download Black Duck Detect from https://detect.blackduck.com/detect9.ps1 before February 14th, 2025, to prevent script and scan execution failure."
+    Write-Host "*** Error: Synopsys Detect has been rebranded as Black Duck Detect."
+    Write-Host "*** Please modify your processes to download Black Duck Detect from https://detect.blackduck.com/detect9.ps1, to prevent script and scan execution failure."
     Write-Host "*** For more information, please see the domain name change announcement here: https://community.blackduck.com/s/question/0D5Uh00000JsImfKAF/black-duck-detect-scripts-and-the-impact-of-decommissioning-of-detectsynopsyscom"
     Write-Host "***"
-    Write-Host "*** If you are using the Synopsys Detect Azure extension, migrate to the Black Duck Detect Azure extension before February 14th, 2025."
+    Write-Host "*** If you are using the Synopsys Detect Azure extension, migrate to the Black Duck Detect Azure extension."
     Write-Host "*** For more information, please see the extension release announcement here: https://community.blackduck.com/s/question/0D5Uh00000Mz1AcKAJ/black-duck-detect-azure-devops-ado-plugin-1000-has-been-released"
     Write-Host "***"
-    Write-Host "*** If you are using Synopsys Detect Jenkins plugin (9.0.0 or prior), migrate to Black Duck Detect Jenkins Plugin 10.0.0 before February 14th, 2025."
+    Write-Host "*** If you are using Synopsys Detect Jenkins plugin (9.0.0 or prior), migrate to Black Duck Detect Jenkins Plugin 10.0.0."
     Write-Host "*** For more information, please see the plugin release announcement here: https://community.blackduck.com/s/question/0D5Uh00000Mtso3KAB/black-duck-detect-jenkins-plugin-1000-has-been-released"
     Write-Host "***"
     Write-Host "***"
 }
 
 Write-RebrandingMsg
+exit 99
 
 $ProgressPreference = 'SilentlyContinue'
 function Get-EnvironmentVariable($Key, $DefaultValue) { if (-not (Test-Path Env:$Key)) { return $DefaultValue; }else { return (Get-ChildItem Env:$Key).Value; } }
@@ -259,9 +260,9 @@ function Get-DetectJar ($DetectFolder, $DetectSource, $DetectVersionKey, $Detect
 
             # If major version is 9 or less, than download from com/synopsys/integration location or else com/blackduck/integration
             if($detectVersionNumber -le 9) {
-                $DetectVersionUrl = "https://sig-repo.synopsys.com/api/storage/bds-integrations-release/com/synopsys/integration/synopsys-detect?properties=" + $DetectVersionKey
+                $DetectVersionUrl = "https://repo.blackduck.com/api/storage/bds-integrations-release/com/synopsys/integration/synopsys-detect?properties=" + $DetectVersionKey
             } else {
-                $DetectVersionUrl = "https://sig-repo.synopsys.com/api/storage/bds-integrations-release/com/blackduck/integration/detect?properties=" + $DetectVersionKey
+                $DetectVersionUrl = "https://repo.blackduck.com/api/storage/bds-integrations-release/com/blackduck/integration/detect?properties=" + $DetectVersionKey
             }
             $DetectSource = Receive-DetectSource -ProxyInfo $ProxyInfo -DetectVersionUrl $DetectVersionUrl -DetectVersionKey $DetectVersionKey
         }
@@ -272,9 +273,9 @@ function Get-DetectJar ($DetectFolder, $DetectSource, $DetectVersionKey, $Detect
 
             # If major version is 9 or less, than download from com/synopsys/integration location or else com/blackduck/integration
             if($detectVersionNumber -le 9) {
-                $DetectSource = "https://sig-repo.synopsys.com/bds-integrations-release/com/synopsys/integration/synopsys-detect/" + $DetectVersion + "/synopsys-detect-" + $DetectVersion + ".jar"
+                $DetectSource = "https://repo.blackduck.com/bds-integrations-release/com/synopsys/integration/synopsys-detect/" + $DetectVersion + "/synopsys-detect-" + $DetectVersion + ".jar"
             } else {
-                $DetectSource = "https://sig-repo.synopsys.com/bds-integrations-release/com/blackduck/integration/detect/" + $DetectVersion + "/detect-" + $DetectVersion + ".jar"
+                $DetectSource = "https://repo.blackduck.com/bds-integrations-release/com/blackduck/integration/detect/" + $DetectVersion + "/detect-" + $DetectVersion + ".jar"
             }
         }
     }

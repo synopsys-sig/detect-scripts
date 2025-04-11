@@ -3,6 +3,7 @@ package scripts;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -113,7 +114,11 @@ public abstract class CommonScriptTest {
     void testDetectQASource() throws IOException, InterruptedException {
         // This test requires the system running it to be on the internal network.
         final Map<String, String> environment = createEnvironment(true);
-        environment.put(EnvironmentVariables.DETECT_SOURCE.name(), "https://artifactory.internal.synopsys.com/artifactory/bds-integrations-test/com/synopsys/integration/synopsys-detect/6.3.0-SIGQA1/synopsys-detect-6.3.0-SIGQA1.jar");
+
+        String internalRepoBaseUrl = System.getenv("INTERNAL_REPO_BASE_URL");
+        assertNotNull(internalRepoBaseUrl, "INTERNAL_REPO_BASE_URL must be set to run this test.");
+
+        environment.put(EnvironmentVariables.DETECT_SOURCE.name(), internalRepoBaseUrl + "/artifactory/bds-integrations-test/com/synopsys/integration/synopsys-detect/6.3.0-SIGQA1/synopsys-detect-6.3.0-SIGQA1.jar");
 
         final Process process = executeScript(environment, new ArrayList<>(), true);
         assertExitCode(process, 0);

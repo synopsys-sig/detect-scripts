@@ -61,6 +61,6 @@ task generateScripts(type: JavaExec) {
 }
 
 dependencies {
-    implementation 'com.blackduck.integration:blackduck-common:67.0.1'
+    implementation 'com.blackduck.integration:blackduck-common:67.0.17'
     implementation 'org.freemarker:freemarker:2.3.31'
 }

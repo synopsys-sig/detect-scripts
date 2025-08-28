@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -62,42 +63,42 @@ public class ScriptBuilder {
     }
 
     public void generateScript(List<File> scriptFiles, final File outputDirectory, final String templateFileName, final String scriptExtension, final String scriptVersion, int detectMajorVersion) throws IOException, IntegrationException {
-        final File shellScriptVersionlessFile = new File(outputDirectory, generateVersionlessScriptFilename(scriptExtension, detectMajorVersion));
-        final File shellScriptVersionedFile = new File(outputDirectory, generateVersionedScriptFilename(scriptVersion, scriptExtension, detectMajorVersion));
+        List<File> filesToWrite = new LinkedList<>();
 
-        String detectVersionPropertyName = generateDetectVersionPropertyName(detectMajorVersion);
+        filesToWrite.add(getDestinationFile(outputDirectory, detectMajorVersion, scriptExtension, scriptVersion));
+        filesToWrite.add(getDestinationFile(outputDirectory, null, scriptExtension, scriptVersion));
+
         if (!scriptVersion.contains("-SNAPSHOT")) {
-            final File createdFile = buildScript(templateFileName, shellScriptVersionlessFile, scriptVersion, detectVersionPropertyName);
-            scriptFiles.add(createdFile);
+            filesToWrite.add(getDestinationFile(outputDirectory, detectMajorVersion, scriptExtension, null));
+            filesToWrite.add(getDestinationFile(outputDirectory, null, scriptExtension, null));
         }
 
-        final File createdFile = buildScript(templateFileName, shellScriptVersionedFile, scriptVersion, detectVersionPropertyName);
-        scriptFiles.add(createdFile);
+        String detectVersionPropertyName = generateDetectVersionPropertyName(detectMajorVersion);
+
+        for (File file : filesToWrite) {
+            scriptFiles.add(buildScript(templateFileName, file, scriptVersion, detectVersionPropertyName));
+        }
     }
 
     private String generateDetectVersionPropertyName(final int detectMajorVersion) {
         return String.format("DETECT_LATEST_%s", detectMajorVersion);
     }
 
-    private String generateVersionlessScriptFilename(final String scriptExtension, int detectMajorVersion) {
-        return generateScriptFilename(detectMajorVersion, scriptExtension, null);
-    }
-
-    private String generateVersionedScriptFilename(String scriptVersion, String scriptExtension, int detectMajorVersion) {
-        return generateScriptFilename(detectMajorVersion, scriptExtension, scriptVersion);
-    }
-
-    private String generateScriptFilename(int detectMajorVersion, String scriptExtension, @Nullable String scriptVersion) {
+    private File getDestinationFile(File outputDirectory, Integer detectMajorVersion, String scriptExtension, @Nullable String scriptVersion) {
         StringBuilder sb = new StringBuilder();
         sb.append("detect");
-        sb.append(detectMajorVersion);
+
+        if (detectMajorVersion != null) {
+            sb.append(detectMajorVersion);
+        }
+
         if (scriptVersion != null) {
             sb.append("-");
             sb.append(scriptVersion);
         }
         sb.append(".");
         sb.append(scriptExtension);
-        return sb.toString();
+        return new File(outputDirectory, sb.toString());
     }
 
     private File buildScript(final String scriptTemplateFileName, final File outputFile, final String scriptVersion, final String detectVersionPropertyName) throws IOException, IntegrationException {

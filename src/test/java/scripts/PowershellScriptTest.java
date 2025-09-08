@@ -1,6 +1,5 @@
 package scripts;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.File;
@@ -34,7 +33,8 @@ public class PowershellScriptTest extends CommonScriptTest {
         final ScriptBuilder scriptBuilder = new ScriptBuilder();
         final List<File> scriptFiles = new ArrayList<>();
         scriptBuilder.generateScript(scriptFiles, TEST_OUTPUT_DIRECTORY, "detect-ps.ps1", "ps1", "version-SNAPSHOT", DETECT_LATEST_VERSION);
-        assertEquals(1, scriptFiles.size());
+        
+        assertNumberOfFilesAndNaming(scriptFiles);
 
         powershellScriptDetect = scriptFiles.get(0);
     }

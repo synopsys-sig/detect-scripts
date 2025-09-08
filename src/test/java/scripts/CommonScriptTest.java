@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Tag;
@@ -172,6 +173,17 @@ public abstract class CommonScriptTest {
 
         final File detectJarFile = assertJarExists(directoryWithSpaces, null);
         assertTrue(detectJarFile.delete());
+    }
+
+    protected static void assertNumberOfFilesAndNaming(List<File> scriptFiles) throws IOException {
+        assertEquals(2, scriptFiles.size());
+        assertTrue(FileUtils.contentEquals(scriptFiles.get(0), scriptFiles.get(1)));
+        
+        // One file should contain the major version, one should not
+        final String fileName0 = scriptFiles.get(0).getName();
+        final String fileName1 = scriptFiles.get(1).getName();
+        assertTrue((fileName0.contains(String.valueOf(DETECT_LATEST_VERSION)) && !fileName1.contains(String.valueOf(DETECT_LATEST_VERSION))) ||
+                   (!fileName0.contains(String.valueOf(DETECT_LATEST_VERSION)) && fileName1.contains(String.valueOf(DETECT_LATEST_VERSION))));
     }
 
     protected boolean testEscapingSpaces(final String escapedProjectName) throws IOException, InterruptedException {

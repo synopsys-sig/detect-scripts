@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Tag;
@@ -174,13 +175,24 @@ public abstract class CommonScriptTest {
         assertTrue(detectJarFile.delete());
     }
 
+    protected static void assertNumberOfFilesAndNaming(List<File> scriptFiles) throws IOException {
+        assertEquals(2, scriptFiles.size());
+        assertTrue(FileUtils.contentEquals(scriptFiles.get(0), scriptFiles.get(1)));
+        
+        // One file should contain the major version at the beginning, one should not
+        final String fileName0 = scriptFiles.get(0).getName();
+        final String fileName1 = scriptFiles.get(1).getName();
+        final String versionPrefix = "detect" + DETECT_LATEST_VERSION;
+        assertTrue((fileName0.startsWith(versionPrefix) && !fileName1.startsWith(versionPrefix)) ||
+                   (!fileName0.startsWith(versionPrefix) && fileName1.startsWith(versionPrefix)));
+    }
+
     protected boolean testEscapingSpaces(final String escapedProjectName) throws IOException, InterruptedException {
         final Map<String, String> environment = createEnvironment(false);
         final List<String> arguments = new ArrayList<>();
         arguments.add(escapedProjectName);
 
         final Process process = executeScript(environment, arguments, false);
-        ///////////assertNotExitCode(process, 0);
 
         final String standardOutput = IOUtils.toString(process.getInputStream(), StandardCharsets.UTF_8);
         IOUtils.copy(process.getErrorStream(), System.err);

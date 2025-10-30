@@ -29,7 +29,7 @@ repositories {
 }
 
 group = 'com.blackduck.integration'
-version = '3.4.1-SNAPSHOT'
+version = '3.4.1'
 
 apply plugin: 'com.blackduck.integration.simple'
 

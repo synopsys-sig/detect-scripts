@@ -64,7 +64,7 @@ dependencies {
     constraints {
         implementation 'com.google.guava:guava:32.0.1-jre'
     }
-    implementation platform('com.fasterxml.jackson:jackson-bom:2.18.6')
+    implementation platform('com.fasterxml.jackson:jackson-bom:2.22.0')
     implementation 'com.blackduck.integration:blackduck-common:68.0.2'
     implementation 'org.freemarker:freemarker:2.3.31'
 }
